@@ -35,6 +35,11 @@ public class userService implements UserDetailsService {
 
     public userDTO createUser(userEntity user) {
 
+        String email = user.getEmail();
+        if (userrepo.findByEmail(user.getEmail()) != null) {
+            throw new RuntimeException("Email already exists");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity createdUser = userrepo.save(user);
         createdUser.setPassword(passwordEncoder.encode(createdUser.getPassword()));

@@ -1,6 +1,7 @@
 package in.tripva.assignment.user.filter;
 
 import in.tripva.assignment.user.userService.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,31 +38,40 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = header.substring(7);
 
-        String email = jwtService.extractUsername(token);
+        System.out.println("Header : " + header);
+        System.out.println("Token  : " + token);
 
-        if(email != null && SecurityContextHolder.getContext().getAuthentication()==null) {
-            UserDetails user = userDetailsService.loadUserByUsername(email);
+       try{
+           String email = jwtService.extractUsername(token);
+
+           if(email != null && SecurityContextHolder.getContext().getAuthentication()==null) {
+               UserDetails user = userDetailsService.loadUserByUsername(email);
 
 
-            if (jwtService.isTokenValid(token, user.getUsername())) {
+               if (jwtService.isTokenValid(token, user.getUsername())) {
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationFilter
-                        = new UsernamePasswordAuthenticationToken(user,
-                        null,
-                        user.getAuthorities());
+                   UsernamePasswordAuthenticationToken usernamePasswordAuthenticationFilter
+                           = new UsernamePasswordAuthenticationToken(user,
+                           null,
+                           user.getAuthorities());
 
-                usernamePasswordAuthenticationFilter
-                        .setDetails(
-                                new WebAuthenticationDetailsSource()
-                                .buildDetails(request));
+                   usernamePasswordAuthenticationFilter
+                           .setDetails(
+                                   new WebAuthenticationDetailsSource()
+                                           .buildDetails(request));
 
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(usernamePasswordAuthenticationFilter);
+                   SecurityContextHolder
+                           .getContext()
+                           .setAuthentication(usernamePasswordAuthenticationFilter);
 
-            }
-        }
+               }
+           }
 
+       } catch (ExpiredJwtException e) {
+           response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+           response.getWriter().write("JWT Token Expired");
+           return;
+       }
         filterChain.doFilter(request,response);
 
     }

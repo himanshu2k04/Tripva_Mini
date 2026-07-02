@@ -10,12 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
+@Table(name = "bus_details")
 public class busEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long busId;
     private String operatorName;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private busType busType;
     @Column(unique = true,nullable = false)
     private String busNo;

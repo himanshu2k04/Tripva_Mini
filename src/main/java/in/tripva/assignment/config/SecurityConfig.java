@@ -27,7 +27,9 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/api/create",
-                                "/api/login"
+                                "/api/login",
+                                "/api/trips/search",
+                                "/api/trips/{id}"
                         )
                         .permitAll()
                         .requestMatchers("/bus")

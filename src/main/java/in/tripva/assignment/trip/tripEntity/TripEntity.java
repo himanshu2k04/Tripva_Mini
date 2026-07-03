@@ -1,6 +1,6 @@
 package in.tripva.assignment.trip.tripEntity;
 
-import in.tripva.assignment.bus.busEntity.busEntity;
+import in.tripva.assignment.bus.busEntity.BusEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "trip")
-public class tripEntity  {
+public class TripEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class tripEntity  {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id",nullable = false)
-    private busEntity bus;
+    private BusEntity bus;
 
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;

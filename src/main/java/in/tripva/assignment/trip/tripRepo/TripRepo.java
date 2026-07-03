@@ -1,6 +1,6 @@
 package in.tripva.assignment.trip.tripRepo;
 
-import in.tripva.assignment.trip.tripEntity.tripEntity;
+import in.tripva.assignment.trip.tripEntity.TripEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface tripRepo extends JpaRepository<tripEntity,Long> {
+public interface TripRepo extends JpaRepository<TripEntity,Long> {
 
-    List<tripEntity> findBySourceAndDestinationAndDate(
+    List<TripEntity> findBySourceAndDestinationAndDate(
             String source,
             String destination,
             LocalDate date);
 
 
 
-    Optional<tripEntity> findByBusBusId(Long busId);
+    Optional<TripEntity> findByBusBusId(Long busId);
 }

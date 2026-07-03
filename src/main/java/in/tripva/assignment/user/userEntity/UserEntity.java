@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class userEntity implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

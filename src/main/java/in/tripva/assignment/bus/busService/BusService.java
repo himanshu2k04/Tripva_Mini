@@ -1,8 +1,8 @@
 package in.tripva.assignment.bus.busService;
 
-import in.tripva.assignment.bus.busDTO.busDTO;
-import in.tripva.assignment.bus.busEntity.busEntity;
-import in.tripva.assignment.bus.busRepo.busRepo;
+import in.tripva.assignment.bus.busDTO.BusDTO;
+import in.tripva.assignment.bus.busEntity.BusEntity;
+import in.tripva.assignment.bus.busRepo.BusRepo;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,21 +13,21 @@ import java.util.List;
 @Service
 @Data
 @RequiredArgsConstructor
-public class busService {
+public class BusService {
 
-    private final busRepo busrepo;
+    private final BusRepo busrepo;
     private final ModelMapper modelMapper;
 
 
-    public busDTO addBus(busEntity bus) {
-        busEntity createedBus = busrepo.save(bus);
+    public BusDTO addBus(BusEntity bus) {
+        BusEntity createedBus = busrepo.save(bus);
 
-        return modelMapper.map(createedBus, busDTO.class);
+        return modelMapper.map(createedBus, BusDTO.class);
     }
 
-    public String removeBus(busEntity bus) {
+    public String removeBus(BusEntity bus) {
 
-        busEntity existingBus = busrepo.findByBusNo(bus.getBusNo());
+        BusEntity existingBus = busrepo.findByBusNo(bus.getBusNo());
 
         if (existingBus != null) {
             busrepo.delete(existingBus);
@@ -36,20 +36,20 @@ public class busService {
 
         return "No bus present like this";
     }
-    public List<busDTO> getAllBus() {
-        List<busEntity> bus = busrepo.findAll();
+    public List<BusDTO> getAllBus() {
+        List<BusEntity> bus = busrepo.findAll();
 
         return bus
                 .stream()
                 .map(b ->modelMapper
-                        .map(b, busDTO.class))
+                        .map(b, BusDTO.class))
                 .toList();
     }
 
 
-    public busDTO updateBus(busEntity bus) {
+    public BusDTO updateBus(BusEntity bus) {
 
-        busEntity existingBus = busrepo.findById(bus.getBusId())
+        BusEntity existingBus = busrepo.findById(bus.getBusId())
                 .orElseThrow(() -> new RuntimeException("Bus not found"));
 
         if (bus.getOperatorName() != null) {
@@ -64,9 +64,9 @@ public class busService {
             existingBus.setBusType(bus.getBusType());
         }
 
-        busEntity updatedBus = busrepo.save(existingBus);
+        BusEntity updatedBus = busrepo.save(existingBus);
 
-        return modelMapper.map(updatedBus, busDTO.class);
+        return modelMapper.map(updatedBus, BusDTO.class);
 
     }
 }

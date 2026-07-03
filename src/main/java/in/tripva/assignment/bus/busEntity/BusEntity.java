@@ -11,14 +11,14 @@ import lombok.Setter;
 @Setter
 @Data
 @Table(name = "bus_details")
-public class busEntity {
+public class BusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long busId;
     private String operatorName;
     @Enumerated(EnumType.STRING)
-    private busType busType;
+    private BusType busType;
     @Column(unique = true,nullable = false)
     private String busNo;
     private int totalSeats;

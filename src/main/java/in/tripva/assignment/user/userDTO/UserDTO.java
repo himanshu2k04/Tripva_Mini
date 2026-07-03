@@ -4,7 +4,7 @@ import in.tripva.assignment.user.userEntity.Role;
 import lombok.Data;
 
 @Data
-public class userDTO {
+public class UserDTO {
 
     private Long userId;
     private String name;

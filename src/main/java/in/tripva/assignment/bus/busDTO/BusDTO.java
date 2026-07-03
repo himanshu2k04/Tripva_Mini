@@ -1,14 +1,14 @@
 package in.tripva.assignment.bus.busDTO;
 
-import in.tripva.assignment.bus.busEntity.busType;
+import in.tripva.assignment.bus.busEntity.BusType;
 import lombok.Data;
 
 @Data
-public class busDTO {
+public class BusDTO {
 
     private Long busId;
     private String operatorName;
-    private busType busType;
+    private BusType busType;
     private String busNo;
     private int totalSeats;
 

@@ -1,10 +1,10 @@
 package in.tripva.assignment.trip.tripController;
 
 
-import in.tripva.assignment.trip.tipService.tripService;
-import in.tripva.assignment.trip.tripDTO.searchTripDTO;
-import in.tripva.assignment.trip.tripDTO.tripDTO;
-import in.tripva.assignment.trip.tripEntity.tripEntity;
+import in.tripva.assignment.trip.tipService.TripService;
+import in.tripva.assignment.trip.tripDTO.SearchTripDTO;
+import in.tripva.assignment.trip.tripDTO.TripDTO;
+import in.tripva.assignment.trip.tripEntity.TripEntity;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,18 +18,18 @@ import java.util.List;
 @RequestMapping("/api")
 public class tripController {
 
-    private final tripService tripService;
+    private final TripService tripService;
 
     @PostMapping("/trips")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<tripDTO> createTrip(@RequestBody tripEntity trip){
+    public ResponseEntity<TripDTO> createTrip(@RequestBody TripEntity trip){
 
-        tripDTO createdTrip = tripService.createTrip(trip);
+        TripDTO createdTrip = tripService.createTrip(trip);
         return ResponseEntity.ok(createdTrip);
     }
 
     @GetMapping("/trips/search")
-    public ResponseEntity<List<tripDTO>> searchTrip(@RequestParam String source,
+    public ResponseEntity<List<TripDTO>> searchTrip(@RequestParam String source,
                                            @RequestParam String destination,
                                            @RequestParam LocalDate date)
     {
@@ -39,7 +39,7 @@ public class tripController {
     }
 
     @GetMapping("/trips/{id}")
-    public ResponseEntity<tripDTO> findTrip(@PathVariable Long id){
+    public ResponseEntity<TripDTO> findTrip(@PathVariable Long id){
 
         return ResponseEntity.ok(tripService.findTrip(id));
 

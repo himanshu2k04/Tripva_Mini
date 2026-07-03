@@ -2,9 +2,9 @@ package in.tripva.assignment.user.userService;
 
 import in.tripva.assignment.user.userDTO.LoginRequest;
 import in.tripva.assignment.user.userDTO.LoginResponse;
-import in.tripva.assignment.user.userDTO.userDTO;
-import in.tripva.assignment.user.userEntity.userEntity;
-import in.tripva.assignment.user.userRepo.userRepo;
+import in.tripva.assignment.user.userDTO.UserDTO;
+import in.tripva.assignment.user.userEntity.UserEntity;
+import in.tripva.assignment.user.userRepo.UserRepo;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,27 +13,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Data
 
-public class userService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
-    private userRepo userrepo;
+    private UserRepo userrepo;
     private ModelMapper modelMapper;
     private PasswordEncoder passwordEncoder;
     private JwtService jwtService;
 
 
-    public userService(userRepo userrepo, ModelMapper modelMapper, PasswordEncoder passwordEncoder,JwtService jwtService) {
+    public UserService(UserRepo userrepo, ModelMapper modelMapper, PasswordEncoder passwordEncoder,JwtService jwtService) {
         this.userrepo = userrepo;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
-    public userDTO createUser(userEntity user) {
+    public UserDTO createUser(UserEntity user) {
 
         String email = user.getEmail();
         if (userrepo.findByEmail(user.getEmail()) != null) {
@@ -41,15 +39,15 @@ public class userService implements UserDetailsService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userEntity createdUser = userrepo.save(user);
+        UserEntity createdUser = userrepo.save(user);
         createdUser.setPassword(passwordEncoder.encode(createdUser.getPassword()));
 
-        return modelMapper.map(createdUser, userDTO.class);
+        return modelMapper.map(createdUser, UserDTO.class);
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
 
-        userEntity getUser = userrepo.findByEmail(loginRequest.getEmail());
+        UserEntity getUser = userrepo.findByEmail(loginRequest.getEmail());
         if(getUser==null){
             throw new RuntimeException("user not found");
         }

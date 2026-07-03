@@ -1,12 +1,9 @@
 package in.tripva.assignment.bus.busController;
 
 
-import in.tripva.assignment.bus.busDTO.busDTO;
-import in.tripva.assignment.bus.busEntity.busEntity;
-import in.tripva.assignment.bus.busService.busService;
-import in.tripva.assignment.user.userEntity.Role;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import in.tripva.assignment.bus.busDTO.BusDTO;
+import in.tripva.assignment.bus.busEntity.BusEntity;
+import in.tripva.assignment.bus.busService.BusService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,38 +14,38 @@ import java.util.List;
 @RequestMapping("/bus")
 public class Bus {
 
-    private final busService busService;
+    private final BusService busService;
 
-    public Bus(busService busService) {
+    public Bus(BusService busService) {
         this.busService = busService;
     }
 
     @GetMapping("/showbus")
     @PreAuthorize("hasAnyRole('ADMIN','CUSTOMER')")
-    public List<busDTO> showBus(){
+    public List<BusDTO> showBus(){
 
         return busService.getAllBus();
     }
 
     @PostMapping("/addbus")
     @PreAuthorize("hasRole('ADMIN')")
-    public busDTO addBus(@RequestBody busEntity busEntity){
+    public BusDTO addBus(@RequestBody BusEntity busEntity){
 
         return busService.addBus(busEntity);
     }
 
     @PostMapping("/deletebus")
     @PreAuthorize("hasRole('ADMIN')")
-    public String removeBus(@RequestBody busEntity bus){
+    public String removeBus(@RequestBody BusEntity bus){
 
         return busService.removeBus(bus);
     }
 
     @PatchMapping("/updatebus")
     @PreAuthorize(("hasRole('ADMIN')"))
-    public ResponseEntity<busDTO> updateBus(@RequestBody busEntity bus){
+    public ResponseEntity<BusDTO> updateBus(@RequestBody BusEntity bus){
 
-       busDTO updatedBus = busService.updateBus(bus);
+       BusDTO updatedBus = busService.updateBus(bus);
 
         return ResponseEntity.ok(updatedBus);
 

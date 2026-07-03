@@ -1,8 +1,6 @@
 package in.tripva.assignment.user.userService;
 
-import in.tripva.assignment.user.userDTO.LoginRequest;
-import in.tripva.assignment.user.userDTO.LoginResponse;
-import in.tripva.assignment.user.userEntity.userEntity;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;
